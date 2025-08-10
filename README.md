@@ -8,24 +8,24 @@ The thing is, even with all our recycling programs, a lot of recyclable stuff st
 
 <img width="1280" height="554" alt="1728415349801" src="https://github.com/user-attachments/assets/b510320e-82e9-4d6e-920d-01bc8a087d82" />
 
+### The Dataset
 
-## The Algorithm
+[The model](https://drive.google.com/file/d/1mUO3UONC8jDlJMobr92M0ySdrRZzDbyC/view?usp=sharing) uses a ResNet-18 architecture that has been retrained on [this refined waste classification dataset](https://drive.google.com/file/d/1JVh1xh__7XxJc5QG-dvBXSFSzIcl0spY/view?usp=sharing). For training, 2,456 images were used for both categories (recycling and waste-products), 290 were used for validation, and 145 were used for testing.
 
-### Model Architecture
 
-[The model](Link goes here) uses a ResNet-18 architecture that has been retrained on [this footwear classification dataset](https://www.kaggle.com/datasets/hasibalmuzdadid/shoe-vs-sandal-vs-boot-dataset-15k-images). For training, 4000 images were used for each category, 500 were used for validation, and 500 were used for testing.
 
-### Footwear Categories
-![add image descrition here](https://news.harvard.edu/wp-content/uploads/2024/11/cheese-thumbnail-min.png)
+I kept my dataset simple. Instead of a lot of specific categories, I split everything into just two groups:
 
-The model classifies footwear into the following 3 categories:
+Recycling — plastics, cardboard, paper, and other materials most cities accept in their recycling programs.
 
-1. Boot
-2. Sandal
-3. Shoe
+Waste — food scraps, dirty packaging, and things that can’t be recycled locally.
 
+
+In total, I had about 5,800 images, evenly divided between these two categories. I labeled each image manually so the model had clear, accurate examples to learn from. While this approach meant the AI couldn’t give very specific labels like “glass bottle” or “plastic fork,” it allowed it to focus on the main question: Is this recyclable or not?
+## How the Model Works
+I built the model using transfer learning, which means I started with a pre-trained neural network and fine-tuned it on my dataset. I chose ResNet-18 because it’s known for being accurate and efficient. I used data augmentation — things like rotating, flipping, and changing lighting — so the model would be better at handling real-world photos.
+The model outputs a simple binary classification: “Recycling” or “Waste,” along with a confidence score. Keeping the categories broad actually helped prevent it from overfitting to tiny, irrelevant details and kept it focused on making the right overall decision.
 ## Setup
-
 ### 1. Install Jetson Inference
 
 ```
@@ -42,11 +42,10 @@ sudo make install
 
 Organize images like this:
 ```
-jetson-inference/python/training/classification/data/footwear/
+jetson-inference/python/training/classification/data/recycing_waste-products/
 ├── train/
-│   ├── boot/
-│   ├── sandal/
-│   ├── shoe/
+│   ├── waste-products/
+│   ├── recycling/
 ├── val/
 └── test/
 
@@ -60,12 +59,12 @@ jetson-inference/python/training/classification/data/footwear/
   cd jetson-inference
   ./docker/run.sh
   cd python/training/classification
-  python3 train.py --model-dir=models/footwear data/footwear
+  python3 train.py --model-dir=models/recycing_waste-products data/Data
   ```
 3. Export Model
   ```
   # Still in docker container:
-  python3 onnx_export.py --model-dir=models/footwear
+  python3 onnx_export.py --model-dir=models/recycing_waste-products
   ```
 
 ## Using the Model
@@ -73,8 +72,8 @@ jetson-inference/python/training/classification/data/footwear/
 ### Set Variables
 ```
 cd jetson-inference/python/training/classification
-NET=models/footwear
-DATASET=data/footwear
+NET=models/recycing_waste-products
+DATASET=data/Data
 ```
 
 ### Test on Image
@@ -82,6 +81,9 @@ DATASET=data/footwear
 imagenet.py --model=$NET/resnet18.onnx --input_blob=input_0 --output_blob=output_0 --labels=$DATASET/labels.txt $DATASET/test/boot/<image.jpg> result.jpg
 ```
 Replace <image.jpg> with your actual image.
+
+![output](https://github.com/user-attachments/assets/0c817494-a5f7-4d17-89f5-32ad0dd7291d)
+
 ### Live Camera
 ```
 imagenet.py --model=$NET/resnet18.onnx --input_blob=input_0 --output_blob=output_0 --labels=$DATASET/labels.txt /dev/video0 output.mp4
