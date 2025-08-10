@@ -1,10 +1,13 @@
-# Footwear Image Classification
-
-This project implements a footwear image classification system using NVIDIA Jetson Inference Library. The model has been retrained on a comprehensive footwear dataset to classify different types of shoes with high accuracy.
-
+#  Recycling and Waste Image Classification
+This project implements a waste image classification system using the NVIDIA Jetson Inference Library. The model has been retrained on a custom dataset to classify items into two main categories — Recycling and Waste — with high accuracy.
 ## Overview
+The system can classify waste into two distinct categories, making it suitable for real-world applications in waste management, recycling facilities, educational campaigns, and even smart bin systems. By providing quick and accurate classification, the model helps reduce sorting mistakes and supports more effective recycling practices.
+## Why I Chose This Project
+Living in Canada, I’ve noticed just how much garbage we throw away — and the numbers really drive it home. According to the ([Government of Canada](https://www.canada.ca/en/environment-climate-change/services/environmental-indicators/solid-waste-diversion-disposal.html)) in 2022, Canadians produced **36.5 million tonnes** of solid waste, and over **72%** of it ended up in landfills or incinerators . That works out to about **684 kilograms per person** in just one year, which is one of the highest rates in the world.
+The thing is, even with all our recycling programs, a lot of recyclable stuff still ends up in the trash. Most of the time, it’s not because people don’t care — it’s because they’re not sure where something actually belongs. That uncertainty is what made me want to create this AI waste classification model. The idea was to make a simple tool that could look at a picture of an item and tell you whether it should go in the recycling bin or the garbage. It’s nothing overly complicated, but I think small tools like this could make a big difference in helping people sort waste correctly.
 
-The system can classify footwear into 3 distinct categories, making it suitable for applications in e-commerce, inventory management, fashion analysis, and automated retail systems.
+<img width="1280" height="554" alt="1728415349801" src="https://github.com/user-attachments/assets/b510320e-82e9-4d6e-920d-01bc8a087d82" />
+
 
 ## The Algorithm
 
