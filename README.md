@@ -42,7 +42,7 @@ sudo make install
 
 Organize images like this:
 ```
-jetson-inference/python/training/classification/data/recycing_waste-products/
+jetson-inference/python/training/classification/data/recycling_waste-products/
 ├── train/
 │   ├── waste-products/
 │   ├── recycling/
@@ -59,12 +59,12 @@ jetson-inference/python/training/classification/data/recycing_waste-products/
   cd jetson-inference
   ./docker/run.sh
   cd python/training/classification
-  python3 train.py --model-dir=models/recycing_waste-products data/Data
+  python3 train.py --model-dir=models/recycling_waste-products data/Data
   ```
 3. Export Model
   ```
   # Still in docker container:
-  python3 onnx_export.py --model-dir=models/recycing_waste-products
+  python3 onnx_export.py --model-dir=models/recycling_waste-products
   ```
 
 ## Using the Model
@@ -72,7 +72,7 @@ jetson-inference/python/training/classification/data/recycing_waste-products/
 ### Set Variables
 ```
 cd jetson-inference/python/training/classification
-NET=models/recycing_waste-products
+NET=models/recycling_waste-products
 DATASET=data/Data
 ```
 
@@ -87,11 +87,6 @@ Replace <image.jpg> with your actual image.
 ### Live Camera
 ```
 imagenet.py --model=$NET/resnet18.onnx --input_blob=input_0 --output_blob=output_0 --labels=$DATASET/labels.txt /dev/video0 output.mp4
-```
-
-### Process Video
-```
-imagenet.py --model=$NET/resnet18.onnx --input_blob=input_0 --output_blob=output_0 --labels=$DATASET/labels.txt input.mp4 output.mp4
 ```
 
 ## Resources
